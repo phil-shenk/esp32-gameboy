@@ -13,117 +13,117 @@ static int button_start, button_select, button_a, button_b, button_down, button_
 
 void sdl_init(void)
 {
-	SDL_Init(SDL_INIT_VIDEO);
-	screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    SDL_Init(SDL_INIT_VIDEO);
+    screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 }
 
 int sdl_update(void)
 {
-	SDL_Event e;
+    SDL_Event e;
 
-	while(SDL_PollEvent(&e))
-	{
-		if(e.type == SDL_QUIT)
-			return 1;
+    while(SDL_PollEvent(&e))
+    {
+        if(e.type == SDL_QUIT)
+            return 1;
 
-		if(e.type == SDL_KEYDOWN)
-		{
-			switch(e.key.keysym.sym)
-			{
-				case SDLK_a:
-					button_a = 1;
-				break;
-				case SDLK_s:
-					button_b = 1;
-				break;
-				case SDLK_d:
-					button_select = 1;
-				break;
-				case SDLK_f:
-					button_start = 1;
-				break;
-				case SDLK_LEFT:
-					button_left = 1;
-				break;
-				case SDLK_RIGHT:
-					button_right = 1;
-				break;
-				case SDLK_DOWN:
-					button_down = 1;
-				break;
-				case SDLK_UP:
-					button_up = 1;
-				break;
-			}
-		}
+        if(e.type == SDL_KEYDOWN)
+        {
+            switch(e.key.keysym.sym)
+            {
+                case SDLK_a:
+                    button_a = 1;
+                break;
+                case SDLK_s:
+                    button_b = 1;
+                break;
+                case SDLK_d:
+                    button_select = 1;
+                break;
+                case SDLK_f:
+                    button_start = 1;
+                break;
+                case SDLK_LEFT:
+                    button_left = 1;
+                break;
+                case SDLK_RIGHT:
+                    button_right = 1;
+                break;
+                case SDLK_DOWN:
+                    button_down = 1;
+                break;
+                case SDLK_UP:
+                    button_up = 1;
+                break;
+            }
+        }
 
-		if(e.type == SDL_KEYUP)
-		{
-			switch(e.key.keysym.sym)
-			{
-				case SDLK_a:
-					button_a = 0;
-				break;
-				case SDLK_s:
-					button_b = 0;
-				break;
-				case SDLK_d:
-					button_select = 0;
-				break;
-				case SDLK_f:
-					button_start = 0;
-				break;
-				case SDLK_LEFT:
-					button_left = 0;
-				break;
-				case SDLK_RIGHT:
-					button_right = 0;
-				break;
-				case SDLK_DOWN:
-					button_down = 0;
-				break;
-				case SDLK_UP:
-					button_up = 0;
-				break;
-			}
-		}
+        if(e.type == SDL_KEYUP)
+        {
+            switch(e.key.keysym.sym)
+            {
+                case SDLK_a:
+                    button_a = 0;
+                break;
+                case SDLK_s:
+                    button_b = 0;
+                break;
+                case SDLK_d:
+                    button_select = 0;
+                break;
+                case SDLK_f:
+                    button_start = 0;
+                break;
+                case SDLK_LEFT:
+                    button_left = 0;
+                break;
+                case SDLK_RIGHT:
+                    button_right = 0;
+                break;
+                case SDLK_DOWN:
+                    button_down = 0;
+                break;
+                case SDLK_UP:
+                    button_up = 0;
+                break;
+            }
+        }
 
-	}
-	return 0;
+    }
+    return 0;
 }
 
 unsigned int sdl_get_buttons(void)
 {
-	return (button_start*8) | (button_select*4) | (button_b*2) | button_a;
+    return (button_start*8) | (button_select*4) | (button_b*2) | button_a;
 }
 
 unsigned int sdl_get_directions(void)
 {
-	return (button_down*8) | (button_up*4) | (button_left*2) | button_right;
+    return (button_down*8) | (button_up*4) | (button_left*2) | button_right;
 }
 
 unsigned int *sdl_get_framebuffer(void)
 {
-	return screen->pixels;
+    return screen->pixels;
 }
 
 void sdl_frame(void)
 {
-	if(frames == 0)
-  		gettimeofday(&tv1, NULL);
-	
-	frames++;
-	if(frames % 1000 == 0)
-	{
-		gettimeofday(&tv2, NULL);
-		printf("Frames %d, seconds: %d, fps: %d\n", frames, tv2.tv_sec - tv1.tv_sec, frames/(tv2.tv_sec - tv1.tv_sec));
-	}
-	SDL_Flip(screen);
+    if(frames == 0)
+          gettimeofday(&tv1, NULL);
+    
+    frames++;
+    if(frames % 1000 == 0)
+    {
+        gettimeofday(&tv2, NULL);
+        printf("Frames %d, seconds: %d, fps: %d\n", frames, tv2.tv_sec - tv1.tv_sec, frames/(tv2.tv_sec - tv1.tv_sec));
+    }
+    SDL_Flip(screen);
 }
 
 void sdl_quit()
 {
-	SDL_Quit();
+    SDL_Quit();
 }
 */
 #include "SPI.h"
@@ -172,10 +172,13 @@ void SDL_Flip(byte *screen){
   int i,j;
   for(i = 0;i<GAMEBOY_WIDTH;i++){
     for(j = 0;j<GAMEBOY_HEIGHT;j++){
-        //tft.drawPixel(j, i, color[getColorIndexFromFrameBuffer(j, i)]);
-      }
+      //tft.drawPixel(j, i, color[getColorIndexFromFrameBuffer(j, i)]);
+      Serial.print(char(getColorIndexFromFrameBuffer(j,i)));
     }
-    //memset(pixels,0,GAMEBOY_HEIGHT * GAMEBOY_WIDTH / 4*sizeof(byte));
+	  Serial.println("\n");
+  }
+  Serial.println("frame printed B)\n");
+  //memset(pixels,0,GAMEBOY_HEIGHT * GAMEBOY_WIDTH / 4*sizeof(byte));
 }
 
 void sdl_init(void)
@@ -206,37 +209,37 @@ void sdl_init(void)
   gpio_set_direction(GPIO_NUM_27, GPIO_MODE_INPUT);
 }
 int sdl_update(void){
-	//tft.fillScreen(ILI9341_RED);
+    //tft.fillScreen(ILI9341_RED);
     button_start = !gpio_get_level(GPIO_NUM_14);
     button_right = !gpio_get_level(GPIO_NUM_27);
-	return 0;
+    return 0;
 }
 unsigned int sdl_get_buttons(void)
 {
-	return (button_start*8) | (button_select*4) | (button_b*2) | button_a;
+    return (button_start*8) | (button_select*4) | (button_b*2) | button_a;
 }
 
 unsigned int sdl_get_directions(void)
 {
-	return (button_down*8) | (button_up*4) | (button_left*2) | button_right;
+    return (button_down*8) | (button_up*4) | (button_left*2) | button_right;
 }
 
 byte* sdl_get_framebuffer(void)
 {
-	return pixels;
+    return pixels;
 }
 void sdl_frame(void)
 {
   /* 
-	if(frames == 0)
-		gettimeofday(&tv1, NULL);
-	
-	frames++;
-	if(frames % 1000 == 0)
-	{
-		gettimeofday(&tv2, NULL);
-		printf("Frames %d, seconds: %d, fps: %d\n", frames, tv2.tv_sec - tv1.tv_sec, frames/(tv2.tv_sec - tv1.tv_sec));
-	}
+    if(frames == 0)
+        gettimeofday(&tv1, NULL);
+    
+    frames++;
+    if(frames % 1000 == 0)
+    {
+        gettimeofday(&tv2, NULL);
+        printf("Frames %d, seconds: %d, fps: %d\n", frames, tv2.tv_sec - tv1.tv_sec, frames/(tv2.tv_sec - tv1.tv_sec));
+    }
  */
-	SDL_Flip(pixels);
+    SDL_Flip(pixels);
 }
