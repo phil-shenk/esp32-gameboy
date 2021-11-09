@@ -3,7 +3,7 @@
 #include "rom.h"
 #include "mem.h"
 #include "cpu.h"
-//#include "lcd.h"
+#include "lcd.h"
 #include "sdl.h"
 
 int main(int argc, char *argv[])
